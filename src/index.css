@@ -1,0 +1,565 @@
+/* ============================================================
+   TaskBuddy — index.css  (place at src/index.css)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ── Tokens ── */
+:root {
+  --bg: #080b14;
+  --surface: #111827;
+  --card: #161d2e;
+  --card-hover: #1c2540;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hi: rgba(99, 102, 241, 0.45);
+
+  --indigo: #6366f1;
+  --violet: #8b5cf6;
+  --green: #10b981;
+  --amber: #f59e0b;
+  --red: #ef4444;
+
+  --glow-indigo: rgba(99, 102, 241, 0.22);
+  --glow-green: rgba(16, 185, 129, 0.18);
+  --glow-red: rgba(239, 68, 68, 0.18);
+
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --dim: #475569;
+
+  --r: 16px;
+  --r-sm: 9px;
+  --r-xs: 6px;
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Background glow blobs ── */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 500px;
+  height: 500px;
+  background: rgba(99, 102, 241, 0.08);
+  top: -120px;
+  left: -100px;
+}
+
+body::after {
+  width: 400px;
+  height: 400px;
+  background: rgba(139, 92, 246, 0.07);
+  bottom: -80px;
+  right: -80px;
+}
+
+/* ── Root / Shell ── */
+#root {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px 100px;
+}
+
+/* ── App Wrapper ── */
+.app-wrapper {
+  width: 100%;
+  max-width: 660px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.header-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 99px;
+  padding: 4px 14px;
+  margin-bottom: 14px;
+}
+
+.app-title {
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.app-subtitle {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────
+   PROGRESS CARD
+───────────────────────────────────────── */
+.progress-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 24px;
+}
+
+.progress-stats {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 0;
+}
+
+.stat+.stat {
+  border-left: 1px solid var(--border);
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--indigo), var(--violet));
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px var(--glow-indigo);
+}
+
+/* ─────────────────────────────────────────
+   TASK FORM
+───────────────────────────────────────── */
+.task-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.task-form:focus-within {
+  border-color: var(--border-hi);
+  box-shadow: 0 0 0 4px var(--glow-indigo);
+}
+
+/* Top row: input + button */
+.task-form #inp {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+/* hide the debug h1 inside form */
+.task-form #inp h1 {
+  display: none;
+}
+
+.task-form input[type="text"] {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 11px 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 0;
+}
+
+.task-form input[type="text"]::placeholder {
+  color: var(--dim);
+  font-weight: 400;
+}
+
+.task-form input[type="text"]:focus {
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px var(--glow-indigo);
+}
+
+/* span wrapping the submit button */
+.task-form #inp span {
+  flex-shrink: 0;
+}
+
+.task-form button[type="submit"] {
+  background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 11px 22px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px var(--glow-indigo);
+}
+
+.task-form button[type="submit"]:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 24px var(--glow-indigo);
+}
+
+.task-form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Bottom row: selects */
+.task-form>div>div:last-child {
+  display: flex;
+  gap: 10px;
+}
+
+.task-form select {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 36px 10px 14px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.task-form select:focus {
+  border-color: var(--indigo);
+  color: var(--text);
+  box-shadow: 0 0 0 3px var(--glow-indigo);
+}
+
+/* ─────────────────────────────────────────
+   TASK LIST
+───────────────────────────────────────── */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Empty state */
+.task-list:empty::after {
+  content: 'No tasks yet — add one above 🎯';
+  display: block;
+  text-align: center;
+  color: var(--dim);
+  font-size: 0.9rem;
+  font-style: italic;
+  padding: 40px 0 20px;
+}
+
+/* ── Task Card ── */
+.task-list li {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* left accent line */
+.task-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--indigo), var(--violet));
+  border-radius: 0 2px 2px 0;
+}
+
+.task-list li:hover {
+  background: var(--card-hover);
+  border-color: var(--border-hi);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Left side: text + badges ── */
+.task-list li>div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.task-list li span {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.task-list li small {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Right side: buttons ── */
+.task-list li>div:last-child {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.task-list li button {
+  border-radius: var(--r-xs);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+
+/* Complete / Undo */
+.task-list li button:first-child {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.task-list li button:first-child:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--green);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px var(--glow-green);
+}
+
+/* Delete */
+.task-list li button:last-child {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--red);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
+
+.task-list li button:last-child:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: var(--red);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px var(--glow-red);
+}
+
+/* ── Completed task styling ── */
+.task-list li.done span,
+.task-list li[data-done="true"] span {
+  text-decoration: line-through;
+  color: var(--dim);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--card);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--indigo);
+}
+
+/* ── Focus ring ── */
+:focus-visible {
+  outline: 2px solid var(--indigo);
+  outline-offset: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  #root {
+    padding: 28px 12px 80px;
+  }
+
+  .app-title {
+    font-size: 2.2rem;
+  }
+
+  .task-form {
+    padding: 16px;
+  }
+
+  .task-form #inp {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-form #inp span {
+    width: 100%;
+  }
+
+  .task-form button[type="submit"] {
+    width: 100%;
+    text-align: center;
+  }
+
+  .task-form>div>div:last-child {
+    flex-direction: column;
+  }
+
+  .task-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-list li>div:last-child {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .progress-stats {
+    gap: 0;
+  }
+
+  .stat-number {
+    font-size: 1.3rem;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+p {
+    color: goldenrod;
+}
+
+.progress-tracker {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: blanchedalmond;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
